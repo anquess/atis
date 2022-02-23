@@ -1,60 +1,72 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
+  <v-card>
+      <v-tabs
+        v-model="tabs"
+        fixed-tabs
+        background-color="grey lighten-2"
       >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
+      <v-tabs-slider></v-tabs-slider>
+      <v-tab
+        href="#main"
+      >
+        MAIN
+      </v-tab>
+      <v-tab
+        href="#atis_voice"
+      >
+        ATIS Voice Converter
+      </v-tab>
+      <v-tab
+        href="#atis_watch"
+      >
+        Trial ATIS Voice
+      </v-tab>
+      <v-tab
+        href="#rec_play"
+      >
+        Microphone
+      </v-tab>
+    </v-tabs>
 
-    <v-main>
-      <HelloWorld/>
-    </v-main>
+    <v-tabs-items v-model="tabs">
+      <v-tab-item value="main">
+        <Main/>
+      </v-tab-item>
+      <v-tab-item value="atis_voice">
+        <v-container>
+          <img src="img/atis_voice.png" width="100%">
+        </v-container>
+      </v-tab-item>
+      <v-tab-item value="atis_watch">
+        <v-container>
+          <img src="img/atis_voice.png" width="100%">
+        </v-container>
+      </v-tab-item>
+      <v-tab-item value="rec_play">
+        <Microphone/>
+      </v-tab-item>
+    </v-tabs-items>
+  </v-card>
+
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import Main from './components/Main';
+import Microphone from './components/Microphone.vue';
 
 export default {
   name: 'App',
 
   components: {
-    HelloWorld,
+    Main,
+    Microphone,
   },
 
   data: () => ({
-    //
+      tabs: null,
+      text: 'aaa',
   }),
 };
 </script>
