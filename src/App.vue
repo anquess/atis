@@ -1,6 +1,11 @@
 <template>
   <v-app>
   <v-card>
+    <v-toolbar color="grey lighten-2">
+      <v-toolbar-title>RJCH 函館空港ATIS</v-toolbar-title>
+    </v-toolbar>
+  </v-card>
+  <v-card>
       <v-tabs
         v-model="tabs"
         fixed-tabs
@@ -8,29 +13,29 @@
       >
       <v-tabs-slider></v-tabs-slider>
       <v-tab
-        href="#main"
+        href="#AUTO"
       >
-        MAIN
+        AUTO
       </v-tab>
       <v-tab
         href="#atis_voice"
       >
-        ATIS Voice Converter
+        Manual Convert Voice
       </v-tab>
       <v-tab
         href="#atis_watch"
       >
-        Trial ATIS Voice
+        Trial Convert Voice 
       </v-tab>
       <v-tab
         href="#rec_play"
       >
-        Microphone
+        Manual BroadCast        
       </v-tab>
     </v-tabs>
 
     <v-tabs-items v-model="tabs">
-      <v-tab-item value="main">
+      <v-tab-item value="AUTO">
         <Main/>
       </v-tab-item>
       <v-tab-item value="atis_voice">
@@ -48,13 +53,26 @@
       </v-tab-item>
     </v-tabs-items>
   </v-card>
-
+    <div class="text-center">
+    <v-dialog
+      v-model="dialog"
+      width="500"
+    >
+      <Dialog @close="close" />
+    </v-dialog>
+    <v-btn color="red lighten-2" dark @click="open">
+      Test Alart
+    </v-btn>
+      少し遅れてアラートのダイアログが表示されます。
+    </div>
   </v-app>
 </template>
 
 <script>
 import Main from './components/Main';
 import Microphone from './components/Microphone.vue';
+import Dialog from './components/Dialog.vue';
+
 
 export default {
   name: 'App',
@@ -62,11 +80,24 @@ export default {
   components: {
     Main,
     Microphone,
+    Dialog,
   },
 
   data: () => ({
       tabs: null,
       text: 'aaa',
+      dialog: false,
   }),
+  methods:{
+    open:function(){
+      window.setTimeout( this.delay_open, 3000);
+    },
+    close:function(){
+      this.dialog=false;
+    },
+    delay_open:function(){
+      this.dialog=true;
+    },
+  }
 };
 </script>
