@@ -1,6 +1,7 @@
 <template>
   <v-container fluid>
-  <v-col class="ma-2">
+  <v-row>
+  <v-col cols="4">
     <v-card>
       <v-row class="d-flex justify-center mb-6">
         <p>DIRECT And REC</p>
@@ -35,6 +36,11 @@
           </div>
         </v-col>
       </v-row>
+    </v-card>
+    <v-card>
+      <v-row class="d-flex justify-center mb-6">
+        <p>CHECK</p>
+      </v-row>
       <v-row class="d-flex justify-center mb-6">
         <v-col cols="12">
           <div class="text-center">
@@ -48,6 +54,17 @@
       </v-row>
     </v-card>
   </v-col>
+  <v-col cols="8">
+    <v-card>
+      <v-card-title>
+        Source ATIS Infomation
+      </v-card-title>
+      <v-card-text>
+        <div class="u-pre-wrap" v-text="atis"></div>
+      </v-card-text>
+    </v-card>
+  </v-col>
+  </v-row>
   </v-container>
 </template>
 
@@ -61,6 +78,7 @@
       recPos :0,
       play : false,
       playPos :0,
+      atis:"ATIS RJTT G\nM1100\n(APCH)ILS RWY32L APCH\n",
     }),
     methods:{
       updateTime:function(){
