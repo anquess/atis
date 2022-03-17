@@ -12,6 +12,19 @@
       </v-row>
       <v-row>
         <v-col cols="4">
+          BroadCast Status:
+        </v-col>
+        <v-col cols="8">
+        <v-select
+          v-model="bs_status"
+          :items="bs_statuses"
+          v-bind:background-color="bs_color"
+          v-bind:color="bs_color"
+        ></v-select>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="4">
           Radio Source:
         </v-col>
         <v-col cols="8">
@@ -89,6 +102,17 @@
                   <v-row><v-btn v-bind:color="no2.color" @click="atischange">No.2</v-btn></v-row>
                 </v-col>
               </v-row>
+              <v-row>
+                <v-col cols="4"><v-card-title>BroadCast Desk</v-card-title></v-col>
+                <v-col cols="4">
+                  <v-row>{{no1.status}}</v-row>
+                  <v-row><v-btn v-bind:color="no1.color" @click="atischange">No.1</v-btn></v-row>
+                </v-col>
+                <v-col cols="4">
+                  <v-row>{{no2.status}}</v-row>
+                  <v-row><v-btn v-bind:color="no2.color" @click="atischange">No.2</v-btn></v-row>
+                </v-col>
+              </v-row>
             </v-card-text>
           </v-card>
         </v-col>
@@ -111,6 +135,9 @@
       color: 'green',
       item:"Auto",
       items: ["Auto","SemiAuto","Manual"],
+      bs_color: 'green',
+      bs_status:"ON AIR",
+      bs_statuses: ["ON AIR","OFF AIR","DIRECT","PROGRUM CUT"],
       src:"音声自動化装置",
       recTime:"1:30",
       atis:"ATIS RJTT G\nM1100\n(APCH)ILS RWY32L APCH\n",
@@ -123,6 +150,15 @@
           this.color = "blue"
         }else{
           this.color = "orange"
+        }
+      },
+      bs_status: function(val) {
+        if (val === "ON AIR") {
+          this.bs_color = "green"
+        }else if(val === "DIRECT"){
+          this.bs_color = "orange"
+        }else{
+          this.bs_color = "gray"
         }
       },
     },
@@ -166,6 +202,9 @@
 }
 .orange{
     background-color: orange;
+}
+.gray{
+  background-color: gray;
 }
 .u-pre-wrap {
   white-space: pre-wrap;
