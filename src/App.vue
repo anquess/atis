@@ -45,7 +45,7 @@
       </v-tab-item>
       <v-tab-item value="atis_watch">
         <v-container>
-          <img src="img/atis_voice.png" width="100%">
+          <img src="img/atis_trial.png" width="100%">
         </v-container>
       </v-tab-item>
       <v-tab-item value="rec_play">
