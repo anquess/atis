@@ -1,9 +1,16 @@
 <template>
   <v-dialog v-model="show" :max-width="400">
     <v-card>
+      <div v-if="title==='Info'">
+      <v-card-title class="primary white--text" primary-title>
+        {{ title }}
+      </v-card-title>
+      </div>
+      <div v-else>
       <v-card-title class="error white--text" primary-title>
         {{ title }}
       </v-card-title>
+      </div>
       <v-card-text class="pa-4">
         <p>{{ message }}</p>
       </v-card-text>
