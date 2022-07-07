@@ -2,7 +2,14 @@
   <v-app>
     <v-card>
       <v-toolbar color="grey lighten-2">
-        <v-toolbar-title>RJCH 函館空港ATIS</v-toolbar-title>
+        <v-row>
+          <v-col cols="10">
+            <v-toolbar-title>RJCH 函館空港ATIS</v-toolbar-title>
+          </v-col>
+          <v-col cols="2">
+            <nested-menu icon='mdi-dots-vertical' color="grey lighten-2" :menu-items='fileMenuItems' @nested-menu-click='onMenuItemClick' />
+          </v-col>
+        </v-row> 
       </v-toolbar>
     </v-card>
     <v-card>
@@ -12,6 +19,7 @@
         <v-tab href="#atis_voice"> 音声自動 </v-tab>
         <v-tab href="#atis_watch"> 音声自動試聴 </v-tab>
         <v-tab href="#rec_play"> 放送卓 </v-tab>
+        <v-tab href="#rec">録音 </v-tab>
       </v-tabs>
 
       <v-tabs-items v-model="tabs">
@@ -31,7 +39,12 @@
         <v-tab-item value="rec_play">
           <Microphone :atis="atis" />
         </v-tab-item>
-      </v-tabs-items>
+        <v-tab-item value="rec">
+          <v-container>
+            <img src="img/rec.png" width="100%" />
+          </v-container>
+        </v-tab-item>
+    </v-tabs-items>
     </v-card>
     <div class="text-center">
       <Confirm :show="confirm" :is_confirm="is_confirm" :title="confirm_title" :message="confirm_message" @close="close" @ok="change_direct" />
@@ -45,6 +58,7 @@
 import Main from "./components/Main";
 import Microphone from "./components/Microphone.vue";
 import Confirm from "./components/Confirm.vue";
+import NestedMenu from "./components/NestedMenu.vue";
 
 export default {
   name: "App",
@@ -53,9 +67,35 @@ export default {
     Main,
     Microphone,
     Confirm,
+    NestedMenu,
   },
 
   data: () => ({
+    fileMenuItems: [
+      {
+        name: '辞書',
+        menu: [
+          { name: '単語辞書登録', window: 'jisho_tango.png' },
+          { name: '音声辞書登録', window: 'jisho_onseijisho.png' },
+          { name: '単語分解辞書登録', window: 'jisho_tangobunkai.png' },
+          { name: '文節変換辞書登録', window: 'jisho_bunsetsujisho.png' },
+          { name: 'センテンス形式辞書登録', window: 'jisho_sentens.png' },
+          { name: 'カテゴリ登録', window: 'jisho_category.png' },
+          { name: '辞書更新履歴', window: 'jisho_rireki.png' },
+          { name: '辞書同期', },
+          { name: '辞書バックアップ', window: 'jisho_backup.png' },
+          { name: '辞書リストア', window: 'jisho_restore.png' },
+        ]
+      },
+      {
+        name: 'ユーティリティ',
+        menu: [
+          { name: '記録データ', window: 'utl_kirokudata.png' },
+          { name: 'ログデータ取り出し', window: 'utl_backup.png' },
+          { name: 'セットアップ' },
+        ]
+      },
+    ],
     tabs: null,
     text: "aaa",
     dialog: false,
@@ -164,7 +204,13 @@ export default {
     change_direct: function () {
       this.close();
       this.tabs = "rec_play";
-    }
+    },
+    onMenuItemClick (item) {
+      console.log(`onMenuItemClick(), item=${item}`)
+      if (item.window) {
+        window.open('img/' + item.window, item.name);
+      }
+    },
   },
 };
 </script>
