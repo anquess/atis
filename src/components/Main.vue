@@ -181,10 +181,13 @@ export default {
     item: function (val) {
       if (val === "音声自動変換") {
         this.color = "green";
+        this.$emit('auto');
       } else if (val === "音声半自動変換") {
         this.color = "blue";
+        this.$emit('no_auto');
       } else {
         this.color = "orange";
+        this.$emit('no_auto');
       }
     },
     bs_status: function (val) {

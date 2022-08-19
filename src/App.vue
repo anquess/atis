@@ -24,7 +24,7 @@
 
       <v-tabs-items v-model="tabs">
         <v-tab-item value="AUTO">
-          <Main :atis="atis" @direct="direct" />
+          <Main :atis="atis" @direct="direct" @auto="auto" @no_auto="no_auto" />
         </v-tab-item>
         <v-tab-item value="atis_voice">
           <v-container>
@@ -96,6 +96,7 @@ export default {
         ]
       },
     ],
+    auto: true,
     tabs: null,
     text: "aaa",
     dialog: false,
@@ -187,11 +188,19 @@ export default {
     ],
   }),
   methods: {
+    auto : function(){
+      this.auto = true;
+    },
+    no_auto : function(){
+      this.auto = false;
+    },
     delay_open: function () {
       if(this.alert_message_index === 2){
         this.is_move_atis_voice = true;
-      }else{
+      }else if(this.alert_message_index === 0 || this.auto ){
         this.is_move_atis_voice = false;
+      }else{
+        this.is_move_atis_voice = true;
       }
       this.is_confirm = false;
       this.confirm_title = this.alert_messages[this.alert_message_index].title;
