@@ -47,7 +47,7 @@
     </v-tabs-items>
     </v-card>
     <div class="text-center">
-      <Confirm :show="confirm" :is_confirm="is_confirm" :title="confirm_title" :message="confirm_message" @close="close" @ok="change_direct" />
+      <Confirm :show="confirm" :is_confirm="is_confirm" :is_move_atis_voice="is_move_atis_voice" :title="confirm_title" :message="confirm_message" @close="close" @close2="change_direct_atis_voice" @ok="change_direct" />
       <v-btn color="red lighten-2" dark @click="delay_open"> Test Alart </v-btn>
       少し遅れてアラートのダイアログが表示されます。
     </div>
@@ -103,6 +103,7 @@ export default {
     confirm_title : "test_title",
     confirm_message : "test_message",
     is_confirm: false,
+    is_move_atis_voice: false,
     alert_message_index: 0,
     alert_messages:[
       {
@@ -113,6 +114,10 @@ export default {
         title: "Info",
         message : "ATIS情報を受信しました。",
         },
+      {
+        title: "Alert",
+        message : "ATIS情報の変換に失敗しました"
+      },
     ],
     atis: [
       {
@@ -183,10 +188,15 @@ export default {
   }),
   methods: {
     delay_open: function () {
+      if(this.alert_message_index === 2){
+        this.is_move_atis_voice = true;
+      }else{
+        this.is_move_atis_voice = false;
+      }
       this.is_confirm = false;
       this.confirm_title = this.alert_messages[this.alert_message_index].title;
       this.confirm_message = this.alert_messages[this.alert_message_index].message;
-      this.alert_message_index = (this.alert_message_index + 1) % 2;
+      this.alert_message_index = (this.alert_message_index + 1) % 3;
       window.setTimeout(this.open, 1000);
     },
     open: function() {
@@ -197,6 +207,7 @@ export default {
     },
     direct: function () {
       this.is_confirm = true;
+      this.is_move_atis_voice = false;
       this.confirm_title = "確認";
       this.confirm_message = "放送を中止しダイレクト録音を開始していいいですか？";
       this.open();
@@ -204,6 +215,10 @@ export default {
     change_direct: function () {
       this.close();
       this.tabs = "rec_play";
+    },
+    change_direct_atis_voice: function () {
+      this.close();
+      this.tabs = "atis_voice";
     },
     onMenuItemClick (item) {
       console.log(`onMenuItemClick(), item=${item}`)

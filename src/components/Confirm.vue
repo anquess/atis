@@ -26,9 +26,16 @@
         </v-btn>
         </div>
         <div v-else>
-        <v-btn @click="close">
-          閉じる
-        </v-btn>
+          <div v-if="is_move_atis_voice">
+            <v-btn @click="close2">
+              閉じる
+            </v-btn>
+          </div>
+          <div v-else>
+            <v-btn @click="close">
+              閉じる
+            </v-btn>
+          </div>
         </div>
       </v-card-actions>
     </v-card>
@@ -40,10 +47,13 @@
 <script>
 export default {
   name: 'Confirm',
-  props:["title", "is_confirm", "message", "show"],
+  props:["title", "is_confirm", "is_move_atis_voice","message", "show"],
   methods:{
       close:function(){
         this.$emit('close');
+      },
+      close2:function(){
+        this.$emit('close2');
       },
       ok:function(){
         this.$emit('ok');
